@@ -71,7 +71,11 @@ if __name__ == "__main__":
 
     # print(result)
 
+    avg_waiting_time = 0
     for time_slice in time_slices:
         print(
             f"{time_slice[0]} start time: {time_slice[1]} end time: {time_slice[2]} | Waiting time: {time_slice[3]}"
         )
+        avg_waiting_time += time_slice[3]
+    avg_waiting_time /= len(time_slices)
+    print(f"Average waiting time: {avg_waiting_time}")
