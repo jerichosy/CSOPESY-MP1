@@ -1,0 +1,16 @@
+1 start time: 1 end time: 4 | Waiting time: 0
+2 start time: 4 end time: 7 | Waiting time: 1
+1 start time: 7 end time: 10 | Waiting time: 3
+2 start time: 10 end time: 11 | Waiting time: 3
+3 start time: 11 end time: 14 | Waiting time: 3
+1 start time: 14 end time: 17 | Waiting time: 4
+4 start time: 17 end time: 20 | Waiting time: 6
+3 start time: 20 end time: 23 | Waiting time: 6
+1 start time: 23 end time: 26 | Waiting time: 6
+4 start time: 26 end time: 29 | Waiting time: 6
+1 start time: 29 end time: 32 | Waiting time: 3
+4 start time: 32 end time: 35 | Waiting time: 3
+1 start time: 35 end time: 38 | Waiting time: 3
+4 start time: 38 end time: 41 | Waiting time: 3
+1 start time: 41 end time: 43 | Waiting time: 3
+Average waiting time: 13.25
