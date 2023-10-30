@@ -8,7 +8,7 @@ class Process:
         self.burst_time = burst_time
 
 
-def FCFS(processes: List):
+def FCFS(processes: List[Process]):
     processes.sort(key=lambda Process: Process.arrival_time)
 
     time_slices = []
