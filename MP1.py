@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 
 class Process:
@@ -35,8 +35,83 @@ def SRTF():
     raise NotImplementedError
 
 
-def RR():
-    raise NotImplementedError
+def RR(processes: List[Process], time_quantum: int):
+    processes.sort(key=lambda Process: Process.arrival_time)
+
+    ready_queue = []
+    time_slices = []
+    current_time = processes[0].arrival_time
+    remaining_time = {}
+    last_stop_time: Dict[int, int] = {}
+
+    for process in processes:
+        remaining_time[process.pid] = process.burst_time
+        last_stop_time[process.pid] = process.arrival_time
+
+    ready_queue.append(processes[0])
+
+    while sum(remaining_time.values()) > 0 and len(processes) > 0:
+        if len(ready_queue) == 0 and len(processes) > 0:
+            ready_queue.append(processes[0])
+            current_time = ready_queue[0].arrival_time
+
+        process_to_execute = ready_queue[0]
+
+        if remaining_time[process_to_execute.pid] <= time_quantum:
+            remaining_t = remaining_time[process_to_execute.pid]
+            remaining_time[process_to_execute.pid] -= remaining_t
+            prev_current_time = current_time
+            current_time += remaining_t
+
+            time_slices.append(
+                (
+                    process_to_execute.pid,
+                    prev_current_time,
+                    current_time,
+                    prev_current_time
+                    - last_stop_time[process_to_execute.pid],  # updated waiting time
+                )
+            )
+
+            last_stop_time[
+                process_to_execute.pid
+            ] = current_time  # update the stop time
+        else:
+            remaining_time[process_to_execute.pid] -= time_quantum
+            prev_current_time = current_time
+            current_time += time_quantum
+
+            time_slices.append(
+                (
+                    process_to_execute.pid,
+                    prev_current_time,
+                    current_time,
+                    prev_current_time
+                    - last_stop_time[process_to_execute.pid],  # updated waiting time
+                )
+            )
+
+            last_stop_time[
+                process_to_execute.pid
+            ] = current_time  # update the stop time
+
+        process_to_arrive_in_this_cycle = [
+            p
+            for p in processes
+            if p.arrival_time <= current_time
+            and p != process_to_execute
+            and p not in ready_queue
+            and p in processes
+        ]
+
+        ready_queue.extend(process_to_arrive_in_this_cycle)
+        ready_queue.append(ready_queue.pop(0))
+
+        if remaining_time[process_to_execute.pid] == 0:
+            processes.remove(process_to_execute)
+            ready_queue.remove(process_to_execute)
+
+    return time_slices
 
 
 # Table 1. CPU Scheduling Algorithms and their corresponding value of X.
@@ -67,15 +142,23 @@ if __name__ == "__main__":
     elif X == 2:
         SRTF()
     elif X == 3:
-        RR()
+        time_slices = RR(processes, Z)
 
     # print(result)
 
-    avg_waiting_time = 0
+    total_waiting_time_by_pid = {}
     for time_slice in time_slices:
+        pid = time_slice[0]
+        waiting_time = time_slice[3]
+
+        if pid not in total_waiting_time_by_pid:
+            total_waiting_time_by_pid[pid] = 0
+
+        total_waiting_time_by_pid[pid] += waiting_time
+
         print(
-            f"{time_slice[0]} start time: {time_slice[1]} end time: {time_slice[2]} | Waiting time: {time_slice[3]}"
+            f"{pid} start time: {time_slice[1]} end time: {time_slice[2]} | Waiting time: {waiting_time}"
         )
-        avg_waiting_time += time_slice[3]
-    avg_waiting_time /= len(time_slices)
+
+    avg_waiting_time = sum(total_waiting_time_by_pid.values()) / Y
     print(f"Average waiting time: {avg_waiting_time}")
