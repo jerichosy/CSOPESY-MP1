@@ -12,7 +12,7 @@ def FCFS(processes: List[Process]):
     processes.sort(key=lambda Process: Process.arrival_time)
 
     time_slices = []
-    previous_end_time = 0
+    previous_end_time = processes[0].arrival_time
     for process in processes:
         # start, end, waiting
         time_slices.append(
