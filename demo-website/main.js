@@ -1,10 +1,10 @@
 // main.js
-function strategyChange() {
-    let strategy = document.getElementById('strategy').value;
+function algorithmChange() {
+    let algorithm = document.getElementById('algorithm').value;
     let timeQuantumDiv = document.getElementById('timeQuantumDiv');
 
-    // If strategy is RR, show Time Quantum input. Otherwise, hide it.
-    if(strategy === 'RR') {
+    // If algorithm is RR, show Time Quantum input. Otherwise, hide it.
+    if(algorithm === 'RR') {
         timeQuantumDiv.style.display = 'block';
     } else {
         timeQuantumDiv.style.display = 'none';

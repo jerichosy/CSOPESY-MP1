@@ -8,8 +8,9 @@ def simulate(event):
     arrival_time = document.querySelector("#arrivalTime").value
     burst_time = document.querySelector("#burstTime").value
     time_quantum = document.querySelector("#timeQuantum").value
+    algorithm = document.querySelector("#algorithm").value
 
     output = document.querySelector("#output")
-    output.innerHTML = f"wow\n{arrival_time}\n{burst_time}\n{time_quantum}"
+    output.innerHTML = f"wow\n{algorithm}\n{arrival_time}\n{burst_time}\n{time_quantum}"
 
     # print(test())
