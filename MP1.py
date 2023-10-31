@@ -1,3 +1,4 @@
+import bisect
 from typing import Dict, List
 
 
@@ -39,77 +40,67 @@ def RR(processes: List[Process], time_quantum: int):
     processes.sort(key=lambda Process: Process.arrival_time)
 
     ready_queue = []
+    pending_processes = processes.copy()
+
     time_slices = []
     current_time = processes[0].arrival_time
-    remaining_time = {}
+    total_remaining_time = sum([process.burst_time for process in processes])
     last_stop_time: Dict[int, int] = {}
+    remaining_time = {}
 
     for process in processes:
         remaining_time[process.pid] = process.burst_time
         last_stop_time[process.pid] = process.arrival_time
 
-    ready_queue.append(processes[0])
+    idx = bisect.bisect(
+        [process.arrival_time for process in pending_processes], current_time
+    )
+    ready_queue.extend(pending_processes[:idx])
+    pending_processes = pending_processes[idx:]  # processes that haven't arrived yet
 
-    while sum(remaining_time.values()) > 0 and len(processes) > 0:
-        if len(ready_queue) == 0 and len(processes) > 0:
-            ready_queue.append(processes[0])
-            current_time = ready_queue[0].arrival_time
+    while total_remaining_time > 0:
+        if len(ready_queue) == 0:
+            current_time = pending_processes[0].arrival_time
+            idx = bisect.bisect(
+                [process.arrival_time for process in pending_processes], current_time
+            )
+            ready_queue.extend(pending_processes[:idx])
+            pending_processes = pending_processes[idx:]
 
         process_to_execute = ready_queue[0]
+        prev_current_time = current_time
 
         if remaining_time[process_to_execute.pid] <= time_quantum:
-            remaining_t = remaining_time[process_to_execute.pid]
-            remaining_time[process_to_execute.pid] -= remaining_t
-            prev_current_time = current_time
-            current_time += remaining_t
-
-            time_slices.append(
-                (
-                    process_to_execute.pid,
-                    prev_current_time,
-                    current_time,
-                    prev_current_time
-                    - last_stop_time[process_to_execute.pid],  # updated waiting time
-                )
-            )
-
-            last_stop_time[
-                process_to_execute.pid
-            ] = current_time  # update the stop time
+            current_time += remaining_time[process_to_execute.pid]
+            total_remaining_time -= remaining_time[process_to_execute.pid]
+            remaining_time[process_to_execute.pid] = 0
         else:
-            remaining_time[process_to_execute.pid] -= time_quantum
-            prev_current_time = current_time
             current_time += time_quantum
+            remaining_time[process_to_execute.pid] -= time_quantum
+            total_remaining_time -= time_quantum
 
-            time_slices.append(
-                (
-                    process_to_execute.pid,
-                    prev_current_time,
-                    current_time,
-                    prev_current_time
-                    - last_stop_time[process_to_execute.pid],  # updated waiting time
-                )
+        idx = bisect.bisect(
+            [process.arrival_time for process in pending_processes], current_time
+        )
+        ready_queue.extend(pending_processes[:idx])
+        pending_processes = pending_processes[idx:]
+
+        time_slices.append(
+            (
+                process_to_execute.pid,
+                prev_current_time,
+                current_time,
+                prev_current_time - last_stop_time[process_to_execute.pid],
             )
+        )
 
-            last_stop_time[
-                process_to_execute.pid
-            ] = current_time  # update the stop time
-
-        process_to_arrive_in_this_cycle = [
-            p
-            for p in processes
-            if p.arrival_time <= current_time
-            and p != process_to_execute
-            and p not in ready_queue
-            and p in processes
-        ]
-
-        ready_queue.extend(process_to_arrive_in_this_cycle)
-        ready_queue.append(ready_queue.pop(0))
+        last_stop_time[process_to_execute.pid] = current_time
 
         if remaining_time[process_to_execute.pid] == 0:
-            processes.remove(process_to_execute)
             ready_queue.remove(process_to_execute)
+
+        else:
+            ready_queue.append(ready_queue.pop(0))
 
     return time_slices
 
