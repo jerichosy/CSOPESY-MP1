@@ -25,8 +25,9 @@ f_RR.write(f"3 {Y} {Z}\n")
 # A = process ID
 # B = arrival time
 # C = burst time
+B = random.randint(2, 10)
 for A in range(int(Y)):
-    B = A + random.randint(2, 10)
+    B += 1  # + random.randint(2, 10)
     C = random.randint(2, 100)
 
     f_FCFS.write(f"{A} {B} {C}\n")
