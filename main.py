@@ -57,6 +57,6 @@ def simulate(event):
 
     clk = document.querySelector("#calculationTime")
     toc = perf_counter()
-    clk.innerHTML = f"(Took {toc - tic:0.3f} seconds to solve)"
+    clk.innerHTML = f"(Took {toc - tic:0.3f} seconds)"
 
     return None
