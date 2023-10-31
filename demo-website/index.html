@@ -47,9 +47,20 @@
         <div class="form-group mt-4">
             <label for="output">Output</label>
             <textarea class="form-control" id="output" rows="10" readonly></textarea>
+            <a class="btn btn-secondary mt-2"
+               id="download-link"
+               style="display: none;"
+               onclick="downloadFile()"
+            >Download</a>
         </div>
-        <py-script>print("Hello, World!")</py-script>
+        <button class="btn btn-success mt-2" id="compare">Compare</button>
+            <div class="form-group mt-4">
+                <label for="comparison-box">Comparison Box</label>
+                <textarea class="form-control" id="comparison-box" rows="10"></textarea>
+            </div>
     </div>
+
+    <py-script>print("Hello, World!")</py-script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
