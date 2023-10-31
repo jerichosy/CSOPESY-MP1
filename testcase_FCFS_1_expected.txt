@@ -1,6 +1,6 @@
-0 start time: 0 end time: 2 | Waiting time: 0
-1 start time: 2 end time: 6 | Waiting time: 0
-2 start time: 6 end time: 12 | Waiting time: 2
-3 start time: 12 end time: 20 | Waiting time: 6
-4 start time: 20 end time: 30 | Waiting time: 12
+1 start time: 0 end time: 2 | Waiting time: 0
+2 start time: 2 end time: 6 | Waiting time: 0
+3 start time: 6 end time: 12 | Waiting time: 2
+4 start time: 12 end time: 20 | Waiting time: 6
+5 start time: 20 end time: 30 | Waiting time: 12
 Average waiting time: 4.0

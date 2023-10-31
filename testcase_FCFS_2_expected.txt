@@ -1,4 +1,4 @@
-0 start time: 0 end time: 24 | Waiting time: 0
-1 start time: 24 end time: 27 | Waiting time: 24
-2 start time: 27 end time: 30 | Waiting time: 27
+1 start time: 0 end time: 24 | Waiting time: 0
+2 start time: 24 end time: 27 | Waiting time: 24
+3 start time: 27 end time: 30 | Waiting time: 27
 Average waiting time: 17.0
