@@ -1,3 +1,2 @@
 [[fetch]]
-files = ["../MP1.py"]
-to_folder = "project"
+files = ['MP1.py']
