@@ -26,7 +26,7 @@ f_RR.write(f"3 {Y} {Z}\n")
 # B = arrival time
 # C = burst time
 B = random.randint(2, 10)
-for A in range(int(Y)):
+for A in range(1, int(Y) + 1):
     B += 1  # + random.randint(2, 10)
     C = random.randint(2, 100)
 
