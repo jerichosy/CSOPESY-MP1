@@ -1,4 +1,5 @@
 from enum import IntEnum
+from time import perf_counter
 
 from pyscript import document
 
@@ -13,6 +14,7 @@ class Algorithm(IntEnum):
 
 
 def simulate(event):
+    tic = perf_counter()
     print("Simulate button clicked")
 
     arrival_time = document.querySelector("#arrivalTime").value
@@ -52,5 +54,9 @@ def simulate(event):
 
     output = document.querySelector("#output")
     output.innerHTML = result
+
+    clk = document.querySelector("#calculationTime")
+    toc = perf_counter()
+    clk.innerHTML = f"(Took {toc - tic:0.3f} seconds to solve)"
 
     return None
