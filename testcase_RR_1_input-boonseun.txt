@@ -1,0 +1,6 @@
+For use in https://boonsuen.com/process-scheduling-solver
+
+Converted from testcase_RR_1_input.txt
+
+Arrival Times: 1 3 8 11
+Burst Times: 20 4 6 12
