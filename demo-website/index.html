@@ -10,8 +10,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- PyScript -->
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pyscript/core/dist/core.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core/dist/core.js"></script>
 </head>
 <body>
     <div class="container">
@@ -43,11 +43,12 @@
             <label for="timeQuantum">Time Quantum</label>
             <input type="text" class="form-control" id="timeQuantum" placeholder="3">
         </div>
-        <button class="btn btn-primary" id="submit" onclick="submitClick()">Submit</button>
+        <button class="btn btn-primary" id="submit" onclick="submitClick()" py-click="simulate">Simulate</button>
         <div class="form-group mt-4">
             <label for="output">Output</label>
             <textarea class="form-control" id="output" rows="10" readonly></textarea>
         </div>
+        <py-script>print("Hello, World!")</py-script>
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -57,5 +58,8 @@
 
     <!-- Custom JavaScript -->
     <script src="main.js"></script>
+
+    <!-- PyScript -->
+    <script type="py" src="./main.py"></script>
 </body>
 </html>

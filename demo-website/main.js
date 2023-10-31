@@ -12,17 +12,17 @@ function strategyChange() {
 }
 
 function submitClick() {
-    let strategy = document.getElementById('strategy').value;
-    let arrivalTime = document.getElementById('arrivalTime').value;
-    let burstTime = document.getElementById('burstTime').value;
-    let timeQuantum = document.getElementById('timeQuantum').value;
-    let output = 'Strategy: ' + strategy + '\nArrival Time: ' + arrivalTime + '\nBurst Time: ' + burstTime;
+    // let strategy = document.getElementById('strategy').value;
+    // let arrivalTime = document.getElementById('arrivalTime').value;
+    // let burstTime = document.getElementById('burstTime').value;
+    // let timeQuantum = document.getElementById('timeQuantum').value;
+    // let output = 'Strategy: ' + strategy + '\nArrival Time: ' + arrivalTime + '\nBurst Time: ' + burstTime;
 
-    // If strategy is RR, add Time Quantum to output.
-    if(strategy === 'RR') {
-        output += '\nTime Quantum: ' + timeQuantum;
-    }
+    // // If strategy is RR, add Time Quantum to output.
+    // if(strategy === 'RR') {
+    //     output += '\nTime Quantum: ' + timeQuantum;
+    // }
 
-    // Output the results in the textbox
-    document.getElementById('output').innerText = output;
+    // // Output the results in the textbox
+    // document.getElementById('output').innerText = output;
 }
