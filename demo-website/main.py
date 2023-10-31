@@ -1,5 +1,7 @@
 from pyscript import document
 
+# from MP1 import test
+
 
 def simulate(event):
     print("wow")
@@ -9,3 +11,5 @@ def simulate(event):
 
     output = document.querySelector("#output")
     output.innerHTML = f"wow\n{arrival_time}\n{burst_time}\n{time_quantum}"
+
+    # print(test())
