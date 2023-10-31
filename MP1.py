@@ -111,6 +111,37 @@ def RR(processes: List[Process], time_quantum: int):
 # |     SJF	                 |     1
 # |     SRTF	             |     2
 # |     RR	                 |     3
+def solve(X: int, processes: List[Process], Z: int):
+    if X == 0:
+        return FCFS(processes)
+    elif X == 1:
+        SJF()
+    elif X == 2:
+        SRTF()
+    elif X == 3:
+        return RR(processes, Z)
+
+
+def format_result(time_slices: List[tuple], Y: int):
+    total_waiting_time_by_pid = {}
+    formatted = []
+    for time_slice in time_slices:
+        pid = time_slice[0]
+        waiting_time = time_slice[3]
+
+        if pid not in total_waiting_time_by_pid:
+            total_waiting_time_by_pid[pid] = 0
+
+        total_waiting_time_by_pid[pid] += waiting_time
+
+        formatted.append(
+            f"{pid} start time: {time_slice[1]} end time: {time_slice[2]} | Waiting time: {waiting_time}"
+        )
+
+    avg_waiting_time = sum(total_waiting_time_by_pid.values()) / Y
+    formatted.append(f"Average waiting time: {avg_waiting_time}")
+
+    return "\n".join(formatted)
 
 
 if __name__ == "__main__":
@@ -126,30 +157,6 @@ if __name__ == "__main__":
         A, B, C = list(map(int, input().rstrip().split(" ")))
         processes.append(Process(A, B, C))
 
-    if X == 0:
-        time_slices = FCFS(processes)
-    elif X == 1:
-        SJF()
-    elif X == 2:
-        SRTF()
-    elif X == 3:
-        time_slices = RR(processes, Z)
+    time_slices = solve(X, processes, Z)
 
-    # print(result)
-
-    total_waiting_time_by_pid = {}
-    for time_slice in time_slices:
-        pid = time_slice[0]
-        waiting_time = time_slice[3]
-
-        if pid not in total_waiting_time_by_pid:
-            total_waiting_time_by_pid[pid] = 0
-
-        total_waiting_time_by_pid[pid] += waiting_time
-
-        print(
-            f"{pid} start time: {time_slice[1]} end time: {time_slice[2]} | Waiting time: {waiting_time}"
-        )
-
-    avg_waiting_time = sum(total_waiting_time_by_pid.values()) / Y
-    print(f"Average waiting time: {avg_waiting_time}")
+    print(format_result(time_slices, Y))

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSOPESY S13 CPU Scheduler</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pyscript/core/dist/core.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core/dist/core.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>CSOPESY S13 CPU Scheduler</h1>
+        <p>by</p>
+        <ul>
+            <li>BALCUEVA, JOSHUA CHUPUNGCO</li>
+            <li>LA'O, ERIN DENISE COCHIENGCO</li>
+            <li>SY, MATTHEW JERICHO GO</li>
+        </ul>
+        <div class="form-group">
+            <label for="algorithm">Algorithm</label>
+            <select class="form-control" id="algorithm" onchange="algorithmChange()">
+                <option value="FCFS">FCFS</option>
+                <option value="SJF">SJF</option>
+                <option value="SRTF">SRTF</option>
+                <option value="RR">RR</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="arrivalTime">Arrival Times</label>
+            <input type="text" class="form-control" id="arrivalTime" placeholder="0 2 4 6 8">
+        </div>
+        <div class="form-group">
+            <label for="burstTime">Burst Times</label>
+            <input type="text" class="form-control" id="burstTime" placeholder="2 4 6 8 10">
+        </div>
+        <div class="form-group" id="timeQuantumDiv" style="display: none;">
+            <label for="timeQuantum">Time Quantum</label>
+            <input type="text" class="form-control" id="timeQuantum" placeholder="3">
+        </div>
+        <button class="btn btn-primary" id="submit" onclick="submitClick()" py-click="simulate">Simulate</button>
+        <div class="form-group mt-4">
+            <label for="output">Output</label> <span id="calculationTime" class="text-secondary"></span>
+            <textarea class="form-control" id="output" rows="10" readonly></textarea>
+            <a class="btn btn-secondary mt-2"
+               id="download-link"
+               style="display: none;"
+               onclick="downloadFile()"
+            >Download</a>
+        </div>
+        <button class="btn btn-success mt-2" id="compare">Compare</button>
+            <div class="form-group mt-4">
+                <label for="comparison-box">Comparison Box</label>
+                <textarea class="form-control" id="comparison-box" rows="10"></textarea>
+            </div>
+    </div>
+
+    <py-script>print("Hello, World!")</py-script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="main.js"></script>
+
+    <!-- PyScript -->
+    <script type="py" src="./main.py" config="pyscript.toml"></script>
+</body>
+</html>
