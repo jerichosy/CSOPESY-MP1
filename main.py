@@ -1,16 +1,9 @@
-from enum import IntEnum
 from time import perf_counter
 
 from pyscript import document
 
 from MP1 import Process, format_result, solve
-
-
-class Algorithm(IntEnum):
-    FCFS = 0
-    SJF = 1
-    SRTF = 2
-    RR = 3
+from utils.utils import Algorithm
 
 
 def simulate(event):

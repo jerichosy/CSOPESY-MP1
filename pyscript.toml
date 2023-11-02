@@ -1,2 +1,2 @@
 [[fetch]]
-files = ['MP1.py']
+files = ['MP1.py', 'utils/utils.py']
