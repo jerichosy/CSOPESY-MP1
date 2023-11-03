@@ -38,7 +38,7 @@ def simulate(event):
     time_quantum = 1
     if algorithm == Algorithm.RR:
         time_quantum = int(document.querySelector("#timeQuantum").value)
-        print(time_quantum)
+        print(f"Time Quantum: {time_quantum}")
         if time_quantum == "":
             print("Error: Time quantum must be set for Round Robin algorithm")
             return None
