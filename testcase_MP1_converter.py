@@ -18,7 +18,7 @@ with open(args.file_path, "r") as file:
 
 # Get algorithm and time slice value
 X, _, Z = lines[0].rstrip().split(" ")
-algorithm = Algorithm(int(X))  # convert X to Algorithm enum
+algorithm: Algorithm = Algorithm(int(X))  # convert X to Algorithm enum
 
 # Get rest of the lines
 lines = lines[1:]
