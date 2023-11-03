@@ -31,11 +31,12 @@ def simulate(event):
     for i in range(process_count):
         print(i + 1, arrival_time[i], burst_time[i])
         processes.append(Process(i + 1, arrival_time[i], burst_time[i]))
-    algorithm = Algorithm[document.querySelector("#algorithm").value].value
-    print(algorithm)
+    # get string name of algorithm, then convert to Algorithm enum
+    algorithm: Algorithm = Algorithm[document.querySelector("#algorithm").value]
+    print(algorithm.name, algorithm.value)
 
     time_quantum = 1
-    if algorithm == Algorithm.RR.value:
+    if algorithm == Algorithm.RR:
         time_quantum = int(document.querySelector("#timeQuantum").value)
         print(time_quantum)
         if time_quantum == "":

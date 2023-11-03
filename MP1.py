@@ -1,6 +1,8 @@
 import bisect
 from typing import Dict, List
 
+from utils.utils import Algorithm
+
 
 class Process:
     def __init__(self, pid, arrival_time, burst_time):
@@ -111,14 +113,14 @@ def RR(processes: List[Process], time_quantum: int):
 # |     SJF	                 |     1
 # |     SRTF	             |     2
 # |     RR	                 |     3
-def solve(X: int, processes: List[Process], Z: int):
-    if X == 0:
+def solve(algorithm: Algorithm, processes: List[Process], Z: int):
+    if algorithm == Algorithm.FCFS:
         return FCFS(processes)
-    elif X == 1:
+    elif algorithm == Algorithm.SJF:
         SJF()
-    elif X == 2:
+    elif algorithm == Algorithm.SRTF:
         SRTF()
-    elif X == 3:
+    elif algorithm == Algorithm.RR:
         return RR(processes, Z)
 
 
@@ -157,6 +159,6 @@ if __name__ == "__main__":
         A, B, C = list(map(int, input().rstrip().split(" ")))
         processes.append(Process(A, B, C))
 
-    time_slices = solve(X, processes, Z)
+    time_slices = solve(Algorithm(X), processes, Z)
 
     print(format_result(time_slices, Y))
