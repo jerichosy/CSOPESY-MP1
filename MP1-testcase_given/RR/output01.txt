@@ -1,0 +1,6 @@
+1 start time: 6 end time: 16 | start time: 36 end time: 46 | start time: 80 end time: 87 | Waiting time: 54
+2 start time: 16 end time: 26 | start time: 60 end time: 70 | start time: 96 end time: 98 | Waiting time: 66
+3 start time: 26 end time: 36 | start time: 70 end time: 80 | Waiting time: 47
+4 start time: 46 end time: 56 | start time: 87 end time: 96 | Waiting time: 57
+5 start time: 56 end time: 60 | Waiting time: 33
+Average waiting time: 51.4

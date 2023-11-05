@@ -1,0 +1,12 @@
+1 start time: 0 end time: 4 | start time: 243 end time: 292 | Waiting time: 239
+2 start time: 292 end time: 348 | Waiting time: 291
+3 start time: 4 end time: 6 | start time: 198 end time: 243 | Waiting time: 192
+4 start time: 6 end time: 33 | Waiting time: 0
+5 start time: 33 end time: 37 | start time: 50 end time: 61 | start time: 61 end time: 65 | Waiting time: 14
+6 start time: 37 end time: 50 | Waiting time: 0
+7 start time: 114 end time: 156 | Waiting time: 77
+8 start time: 156 end time: 198 | Waiting time: 117
+9 start time: 69 end time: 90 | Waiting time: 17
+10 start time: 90 end time: 114 | Waiting time: 33
+11 start time: 65 end time: 69 | Waiting time: 4
+Average waiting time: 89.5
