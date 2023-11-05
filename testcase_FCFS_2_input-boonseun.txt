@@ -2,5 +2,6 @@ For use in https://boonsuen.com/process-scheduling-solver
 
 Converted from testcase_FCFS_2_input.txt
 
+Algorithm: FCFS
 Arrival Times: 0 0 0
 Burst Times: 24 3 3
