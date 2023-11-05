@@ -161,4 +161,4 @@ if __name__ == "__main__":
 
     time_slices = solve(Algorithm(X), processes, Z)
 
-    print(format_result(time_slices, Y))
+    print(format_result(time_slices, Y), end="")
