@@ -33,14 +33,19 @@ for folder in ${folders[@]}; do
     # derive the output file from the input file
     output_file="${input_file/input/output}"
     echo ""
-    # echo "--------------------------------------------------------"
     echo "Testing $input_file against $output_file"
-    # echo "--------------------------------------------------------"
 
-    # run the python script with the input file and pass the output to diff command
-    diff <(python MP1.py < $input_file) $output_file
-    if [ $? -ne 0 ]; then
+    # run the python script with the input file and pass the output to diff command and add indentation
+    DIFF_OUTPUT=$(diff <(python MP1.py < $input_file) $output_file)
+    DIFF_EXIT_CODE=$?
+
+    if [ $DIFF_EXIT_CODE -ne 0 ]; then
         printf "${RED}Failed${NC}\n"
+        if [ ! -z "$DIFF_OUTPUT" ]; then
+            echo "---BEGIN DIFF---"
+            echo "$DIFF_OUTPUT" | sed 's/^/    /'
+            echo "---END DIFF---"
+        fi
     else
         printf "${GREEN}Passed${NC}\n"
     fi
