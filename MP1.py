@@ -141,7 +141,7 @@ def format_result(time_slices: List[tuple], Y: int):
         )
 
     avg_waiting_time = sum(total_waiting_time_by_pid.values()) / Y
-    formatted.append(f"Average waiting time: {avg_waiting_time}")
+    formatted.append(f"Average waiting time: {round(avg_waiting_time, 1)}")
 
     return "\n".join(formatted)
 
