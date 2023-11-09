@@ -36,7 +36,7 @@ for folder in ${folders[@]}; do
     echo "Testing $input_file against $output_file"
 
     # run the python script with the input file and pass the output to diff command and add indentation
-    DIFF_OUTPUT=$(diff <(python MP1.py < $input_file) $output_file)
+    DIFF_OUTPUT=$(diff --strip-trailing-cr <(python MP1.py < $input_file) $output_file)
     DIFF_EXIT_CODE=$?
 
     if [ $DIFF_EXIT_CODE -ne 0 ]; then
