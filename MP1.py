@@ -6,6 +6,7 @@ from utils.utils import Algorithm
 
 class Process:
     def __init__(self, pid, arrival_time, burst_time):
+        # These values are not mutated over the course of the algorithm
         self.pid = pid
         self.arrival_time = arrival_time
         self.burst_time = burst_time
