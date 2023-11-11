@@ -7,6 +7,13 @@ NC='\033[0m' # No Color
 # the directory that contains the test folders
 TEST_DIR="MP1-testcase_given"
 
+DEBUG_MODE=0
+
+# Check for command line argument to enable debug mode
+if [ "$1" == "--debug" ]; then
+    DEBUG_MODE=1
+fi
+
 echo "Enter the number of the folder to test: "
 echo "1) FCFS"
 echo "2) RR"
@@ -41,7 +48,7 @@ for folder in ${folders[@]}; do
 
     if [ $DIFF_EXIT_CODE -ne 0 ]; then
         printf "${RED}Failed${NC}\n"
-        if [ ! -z "$DIFF_OUTPUT" ]; then
+        if [ $DEBUG_MODE -eq 1 ] && [ ! -z "$DIFF_OUTPUT" ]; then
             echo "---BEGIN DIFF---"
             echo "$DIFF_OUTPUT" | sed 's/^/    /'
             echo "---END DIFF---"
