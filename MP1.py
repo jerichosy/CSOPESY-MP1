@@ -126,22 +126,31 @@ def solve(algorithm: Algorithm, processes: List[Process], Z: int):
 
 
 def format_result(time_slices: List[tuple], Y: int):
-    total_waiting_time_by_pid = {}
+    process_time_slices = {}
     formatted = []
+
+    # Group time slices by process ID
     for time_slice in time_slices:
-        pid = time_slice[0]
-        waiting_time = time_slice[3]
+        pid, start_time, end_time, waiting_time = time_slice
+        if pid not in process_time_slices:
+            process_time_slices[pid] = {"time_slices": [], "total_waiting_time": 0}
 
-        if pid not in total_waiting_time_by_pid:
-            total_waiting_time_by_pid[pid] = 0
-
-        total_waiting_time_by_pid[pid] += waiting_time
-
-        formatted.append(
-            f"{pid} start time: {time_slice[1]} end time: {time_slice[2]} | Waiting time: {waiting_time}"
+        process_time_slices[pid]["time_slices"].append(
+            f"start time: {start_time} end time: {end_time}"
         )
+        process_time_slices[pid]["total_waiting_time"] += waiting_time
 
-    avg_waiting_time = sum(total_waiting_time_by_pid.values()) / Y
+    # Format output for each process
+    for pid in sorted(process_time_slices.keys()):
+        slices_str = " | ".join(process_time_slices[pid]["time_slices"])
+        waiting_time = process_time_slices[pid]["total_waiting_time"]
+        formatted.append(f"{pid} {slices_str} | Waiting time: {waiting_time}")
+
+    # Calculate average waiting time
+    total_waiting_time = sum(
+        value["total_waiting_time"] for value in process_time_slices.values()
+    )
+    avg_waiting_time = total_waiting_time / Y
     formatted.append(f"Average waiting time: {round(avg_waiting_time, 1)}")
 
     return "\n".join(formatted)
