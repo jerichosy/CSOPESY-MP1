@@ -57,7 +57,9 @@ def RR(processes: List[Process], time_quantum: int):
         last_stop_time[process.pid] = process.arrival_time
 
     idx = bisect.bisect(
-        [process.arrival_time for process in pending_processes], current_time
+        pending_processes,
+        current_time,
+        key=lambda Process: Process.arrival_time,
     )
     ready_queue.extend(pending_processes[:idx])
     pending_processes = pending_processes[idx:]  # processes that haven't arrived yet
@@ -66,7 +68,9 @@ def RR(processes: List[Process], time_quantum: int):
         if len(ready_queue) == 0:
             current_time = pending_processes[0].arrival_time
             idx = bisect.bisect(
-                [process.arrival_time for process in pending_processes], current_time
+                pending_processes,
+                current_time,
+                key=lambda Process: Process.arrival_time,
             )
             ready_queue.extend(pending_processes[:idx])
             pending_processes = pending_processes[idx:]
@@ -84,7 +88,9 @@ def RR(processes: List[Process], time_quantum: int):
             total_remaining_time -= time_quantum
 
         idx = bisect.bisect(
-            [process.arrival_time for process in pending_processes], current_time
+            pending_processes,
+            current_time,
+            key=lambda Process: Process.arrival_time,
         )
         ready_queue.extend(pending_processes[:idx])
         pending_processes = pending_processes[idx:]
