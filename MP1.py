@@ -1,3 +1,4 @@
+import argparse
 import bisect
 from typing import Dict, List
 
@@ -148,6 +149,12 @@ def format_result(time_slices: List[tuple], Y: int):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--silent", action="store_true", help="Suppress algorithm output"
+    )
+    args = parser.parse_args()
+
     # X = CPU scheduling algorithm
     # Y = number of processes (constraints: 3 ≤ Y ≤ 100)
     # Z = time slice value (constraints: 1 ≤ Z ≤ 100, applicable to Round-Robin only, if X is not RR then this must be set 1 and ignored)
@@ -162,4 +169,5 @@ if __name__ == "__main__":
 
     time_slices = solve(Algorithm(X), processes, Z)
 
-    print(format_result(time_slices, Y), end="")
+    if not args.silent:
+        print(format_result(time_slices, Y), end="")
