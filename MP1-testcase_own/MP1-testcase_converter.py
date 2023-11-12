@@ -2,7 +2,10 @@
 
 import argparse
 import os
+import sys
 
+# Add parent directory to sys.path
+sys.path.insert(1, os.path.join(sys.path[0], ".."))
 from utils.utils import Algorithm
 
 # Parsing argument
