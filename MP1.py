@@ -1,5 +1,6 @@
 import argparse
 import bisect
+from collections import deque
 from typing import Dict, List
 
 from utils.utils import Algorithm
@@ -43,7 +44,7 @@ def SRTF():
 def RR(processes: List[Process], time_quantum: int):
     processes.sort(key=lambda Process: Process.arrival_time)
 
-    ready_queue = []
+    ready_queue = deque()
     pending_processes = processes.copy()
 
     time_slices = []
@@ -110,7 +111,7 @@ def RR(processes: List[Process], time_quantum: int):
             ready_queue.remove(process_to_execute)
 
         else:
-            ready_queue.append(ready_queue.pop(0))
+            ready_queue.append(ready_queue.popleft())
 
     return time_slices
 
