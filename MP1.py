@@ -60,7 +60,7 @@ def RR(processes: List[Process], time_quantum: int):
     while total_remaining_time > 0:
         # If ready queue is empty, advance time to next process arrival
         # Happens at the start of the algorithm and when arrival time of next process is greater than current time
-        if len(ready_queue) == 0:
+        if not ready_queue:
             current_time = pending_processes[0].arrival_time
             idx = bisect.bisect(
                 pending_processes,
