@@ -48,24 +48,18 @@ def RR(processes: List[Process], time_quantum: int):
     pending_processes = processes.copy()
 
     time_slices = []
-    current_time = processes[0].arrival_time
     total_remaining_time = sum([process.burst_time for process in processes])
-    last_stop_time: Dict[int, int] = {}
+    last_stop_time: Dict[int, int] = {}  # for time slice
     remaining_time = {}
 
     for process in processes:
         remaining_time[process.pid] = process.burst_time
-        last_stop_time[process.pid] = process.arrival_time
+        last_stop_time[process.pid] = process.arrival_time  # for time slice
 
-    idx = bisect.bisect(
-        pending_processes,
-        current_time,
-        key=lambda Process: Process.arrival_time,
-    )
-    ready_queue.extend(pending_processes[:idx])
-    pending_processes = pending_processes[idx:]  # processes that haven't arrived yet
-
+    # Execute processes until all processes are completed
     while total_remaining_time > 0:
+        # If ready queue is empty, advance time to next process arrival
+        # Happens at the start of the algorithm and when arrival time of next process is greater than current time
         if len(ready_queue) == 0:
             current_time = pending_processes[0].arrival_time
             idx = bisect.bisect(
@@ -73,29 +67,34 @@ def RR(processes: List[Process], time_quantum: int):
                 current_time,
                 key=lambda Process: Process.arrival_time,
             )
-            ready_queue.extend(pending_processes[:idx])
+            ready_queue.extend(pending_processes[:idx])  # processes that have arrived
             pending_processes = pending_processes[idx:]
 
         process_to_execute = ready_queue[0]
-        prev_current_time = current_time
+        prev_current_time = current_time  # for time slice
 
+        # Execute process until completion or for time quantum
         if remaining_time[process_to_execute.pid] <= time_quantum:
+            # If process is completed within time quantum, execute for remaining time
             current_time += remaining_time[process_to_execute.pid]
             total_remaining_time -= remaining_time[process_to_execute.pid]
             remaining_time[process_to_execute.pid] = 0
         else:
+            # If process will not be completed within time quantum, execute for time quantum
             current_time += time_quantum
             remaining_time[process_to_execute.pid] -= time_quantum
             total_remaining_time -= time_quantum
 
+        # Add processes that have arrived while current process was executing
         idx = bisect.bisect(
             pending_processes,
             current_time,
             key=lambda Process: Process.arrival_time,
         )
-        ready_queue.extend(pending_processes[:idx])
+        ready_queue.extend(pending_processes[:idx])  # processes that have arrived
         pending_processes = pending_processes[idx:]
 
+        # Record time slice
         time_slices.append(
             (
                 process_to_execute.pid,
@@ -104,13 +103,15 @@ def RR(processes: List[Process], time_quantum: int):
                 prev_current_time - last_stop_time[process_to_execute.pid],
             )
         )
-
-        last_stop_time[process_to_execute.pid] = current_time
+        # To calculate waiting time when process is resumed after being preempted (paused)
+        # Set last stop time to current time when process is preempted (paused)
+        last_stop_time[process_to_execute.pid] = current_time  # for time slice
 
         if remaining_time[process_to_execute.pid] == 0:
+            # Remove process from ready queue if it is completed
             ready_queue.remove(process_to_execute)
-
         else:
+            # Move process to back of ready queue if it is not completed
             ready_queue.append(ready_queue.popleft())
 
     return time_slices
