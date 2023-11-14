@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # the directory that contains the test folders
-TEST_DIR="MP1-testcase_given"
+TEST_DIR="testcase_given"
 
 DEBUG_MODE=0
 
@@ -43,7 +43,7 @@ for folder in ${folders[@]}; do
     echo "Testing $input_file against $output_file"
 
     # run the python script with the input file and pass the output to diff command and add indentation
-    DIFF_OUTPUT=$(diff --strip-trailing-cr <(python3 MP1.py < $input_file) $output_file)
+    DIFF_OUTPUT=$(diff --strip-trailing-cr <(python3 main.py < $input_file) $output_file)
     DIFF_EXIT_CODE=$?
 
     if [ $DIFF_EXIT_CODE -ne 0 ]; then
