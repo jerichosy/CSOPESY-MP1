@@ -1,5 +1,6 @@
 import argparse
 import bisect
+import heapq
 from collections import deque
 from typing import Dict, List
 
@@ -37,8 +38,100 @@ def SJF():
     raise NotImplementedError
 
 
-def SRTF():
-    raise NotImplementedError
+def SRTF(processes: List[Process]):
+    # Sort the processes by arrival time
+    processes.sort(key=lambda p: p.arrival_time)
+
+    current_time = 0
+    total_wait_time = 0
+    completed_processes = 0
+    ready_queue = []
+    time_slices = []
+    last_process_id = None
+    last_stop_time: Dict[int, int] = {}  # for time slice
+
+    # Add initial processes to queue
+    for process in processes:
+        # FIXME: Clean up
+        # if process.arrival_time == current_time:
+        #     heapq.heappush(ready_queue, (process.burst_time, process.pid))
+
+        last_stop_time[process.pid] = process.arrival_time  # for time slice
+
+    while completed_processes < len(processes):
+        # print(last_stop_time)  # debug
+
+        if ready_queue:
+            # Pick the process with the smallest remaining time
+            # FIXME: Follow PEP 8 for unused variables
+            rem_time, pid = heapq.heappop(ready_queue)
+            # Keep track of the slices for this process
+            if last_process_id != pid:
+                # This executes at the start of the next process
+                if last_process_id is not None:
+                    time_slices[-1] = (
+                        last_process_id,  # same
+                        time_slices[-1][1],  # same
+                        current_time,  # updated
+                        time_slices[-1][3],  # same
+                    )
+                    # print(last_process_id, pid, "updated", current_time)  # debug
+                    last_stop_time[last_process_id] = current_time  # for time slice
+                # else:  # debug
+                #     print("last_process_id is None")
+                time_slices.append(
+                    (
+                        pid,
+                        current_time,
+                        None,
+                        current_time - last_stop_time[pid],  # waiting time,
+                    )
+                )
+
+                # for next
+                last_process_id = pid
+
+            # Execute this process for one time unit
+            current_time += 1
+            process = next(p for p in processes if p.pid == pid)
+            if not hasattr(process, "remaining_time"):
+                process.remaining_time = process.burst_time
+            process.remaining_time -= 1
+
+            if process.remaining_time == 0:
+                completed_processes += 1
+                total_wait_time += (
+                    current_time - process.burst_time - process.arrival_time
+                )
+            else:
+                heapq.heappush(ready_queue, (process.remaining_time, pid))
+
+        else:
+            current_time = processes[completed_processes].arrival_time
+
+        # Check if any processes have arrived and must be added to the queue
+        for process in processes:
+            if current_time == process.arrival_time:
+                heapq.heappush(
+                    ready_queue,
+                    (
+                        process.burst_time
+                        if not hasattr(process, "remaining_time")
+                        else process.remaining_time,
+                        process.pid,
+                    ),
+                )
+
+    # Complete the last slice
+    time_slices[-1] = (
+        last_process_id,  # same
+        time_slices[-1][1],  # same
+        current_time,  # updated
+        time_slices[-1][3],  # same
+    )
+
+    # Generating the final output
+    return time_slices
 
 
 def RR(processes: List[Process], time_quantum: int):
@@ -129,12 +222,14 @@ def solve(algorithm: Algorithm, processes: List[Process], Z: int):
     elif algorithm == Algorithm.SJF:
         SJF()
     elif algorithm == Algorithm.SRTF:
-        SRTF()
+        return SRTF(processes)
     elif algorithm == Algorithm.RR:
         return RR(processes, Z)
 
 
 def format_result(time_slices: List[tuple], Y: int):
+    # print(time_slices)  # debug
+
     process_time_slices = {}
     formatted = []
 
