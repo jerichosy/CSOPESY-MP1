@@ -52,19 +52,12 @@ def SRTF(processes: List[Process]):
 
     # Add initial processes to queue
     for process in processes:
-        # FIXME: Clean up
-        # if process.arrival_time == current_time:
-        #     heapq.heappush(ready_queue, (process.burst_time, process.pid))
-
         last_stop_time[process.pid] = process.arrival_time  # for time slice
 
     while completed_processes < len(processes):
-        # print(last_stop_time)  # debug
-
         if ready_queue:
             # Pick the process with the smallest remaining time
-            # FIXME: Follow PEP 8 for unused variables
-            rem_time, pid = heapq.heappop(ready_queue)
+            _, pid = heapq.heappop(ready_queue)
             # Keep track of the slices for this process
             if last_process_id != pid:
                 # This executes at the start of the next process
@@ -75,10 +68,7 @@ def SRTF(processes: List[Process]):
                         current_time,  # updated
                         time_slices[-1][3],  # same
                     )
-                    # print(last_process_id, pid, "updated", current_time)  # debug
                     last_stop_time[last_process_id] = current_time  # for time slice
-                # else:  # debug
-                #     print("last_process_id is None")
                 time_slices.append(
                     (
                         pid,
@@ -228,8 +218,6 @@ def solve(algorithm: Algorithm, processes: List[Process], Z: int):
 
 
 def format_result(time_slices: List[tuple], Y: int):
-    # print(time_slices)  # debug
-
     process_time_slices = {}
     formatted = []
 
