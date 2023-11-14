@@ -1,4 +1,4 @@
-# CSOPESY-MP
+## NOTES
 
 ### Testcase sources:
 RR 1
