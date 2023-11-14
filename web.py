@@ -2,7 +2,7 @@ from time import perf_counter
 
 from pyscript import document
 
-from MP1 import Process, format_result, solve
+from main import Process, format_result, solve
 from utils.utils import Algorithm
 
 
