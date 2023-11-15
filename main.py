@@ -50,7 +50,9 @@ def SRTF(processes: List[Process]):
     last_process_id = None
     last_stop_time: Dict[int, int] = {}  # for time slice
 
-    # Add initial processes to queue
+    # Populate last_stop_time with each process' arrival time
+    # The arrival times will be changed to their pause times if they are preempted
+    # Used to calculate waiting times
     for process in processes:
         last_stop_time[process.pid] = process.arrival_time  # for time slice
 
