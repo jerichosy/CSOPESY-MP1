@@ -197,7 +197,8 @@ def RR(processes: List[Process], time_quantum: int):
             ready_queue.remove(process_to_execute)
         else:
             # Move process to back of ready queue if it is not completed
-            ready_queue.append(ready_queue.popleft())
+            # The following line is equivalent to ready_queue.append(ready_queue.popleft())
+            ready_queue.rotate(-1)
 
     return time_slices
 
