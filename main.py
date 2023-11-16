@@ -35,11 +35,11 @@ def FCFS(processes: List[Process]):
 
 
 def SJF():
-    #arrange by least to greatest according to arrival time
+    # arrange by least to greatest according to arrival time
     processes.sort(key=lambda Process: Process.arrival_time)
 
-    time_slices = [] # final list of processes + details
-    done = [] # list of processes already executed
+    time_slices = []  # final list of processes + details
+    done = []  # list of processes already executed
     previous_end_time = 0
 
     for x in range(len(processes)):
@@ -50,23 +50,15 @@ def SJF():
             # if process arrives while previous process was being executed and NOT done
             if process.arrival_time <= previous_end_time and process.pid not in done:
                 pending.append(
-                    Process (
-                        process.pid,
-                        process.arrival_time,
-                        process.burst_time
-                    )
+                    Process(process.pid, process.arrival_time, process.burst_time)
                 )
             # if process IS done      or      process arrives not within previous process' execution time
             else:
                 ready_queue.append(
-                    Process (
-                        process.pid,
-                        process.arrival_time,
-                        process.burst_time
-                    )
+                    Process(process.pid, process.arrival_time, process.burst_time)
                 )
 
-        if pending: # queue is NOT empty:
+        if pending:  # queue is NOT empty:
             pending.sort(key=lambda Process: Process.burst_time)
             previous_end_time += pending[0].burst_time
             for elem in processes:
@@ -81,11 +73,11 @@ def SJF():
                     previous_end_time - pending[0].burst_time - elem.arrival_time,
                 )
             )
-        
-        else: # queue IS empty:
-            if previous_end_time < ready_queue[0].arrival_time: 
-                previous_end_time = ready_queue[0].arrival_time 
-            previous_end_time += ready_queue[0].burst_time 
+
+        else:  # queue IS empty:
+            if previous_end_time < ready_queue[0].arrival_time:
+                previous_end_time = ready_queue[0].arrival_time
+            previous_end_time += ready_queue[0].burst_time
             for elem in processes:
                 if elem.pid == ready_queue[0].pid:
                     break
@@ -95,7 +87,7 @@ def SJF():
                     elem.pid,
                     previous_end_time - ready_queue[0].burst_time,
                     previous_end_time,
-                    previous_end_time - ready_queue[0].burst_time - elem.arrival_time
+                    previous_end_time - ready_queue[0].burst_time - elem.arrival_time,
                 )
             )
     return time_slices
@@ -276,7 +268,7 @@ def solve(algorithm: Algorithm, processes: List[Process], Z: int):
     if algorithm == Algorithm.FCFS:
         return FCFS(processes)
     elif algorithm == Algorithm.SJF:
-        SJF()
+        return SJF()
     elif algorithm == Algorithm.SRTF:
         return SRTF(processes)
     elif algorithm == Algorithm.RR:
