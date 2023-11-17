@@ -59,37 +59,33 @@ def SJF():
                 )
 
         if pending:  # queue is NOT empty:
+            #rearrange from least to greatest (least burst time goes first)
             pending.sort(key=lambda Process: Process.burst_time)
-            previous_end_time += pending[0].burst_time
-            for elem in processes:
-                if elem.pid == pending[0].pid:
-                    break
-            done.append(elem.pid)
+            done.append(pending[0].pid) #process is now done
             time_slices.append(
                 (
-                    elem.pid,
-                    previous_end_time - pending[0].burst_time,
+                    pending[0].pid,
                     previous_end_time,
-                    previous_end_time - pending[0].burst_time - elem.arrival_time,
+                    previous_end_time + pending[0].burst_time,
+                    previous_end_time - pending[0].arrival_time,
                 )
             )
+            previous_end_time += pending[0].burst_time
 
         else:  # queue IS empty:
+            #update previous end time if it's less than the new process' arrival time
             if previous_end_time < ready_queue[0].arrival_time:
                 previous_end_time = ready_queue[0].arrival_time
-            previous_end_time += ready_queue[0].burst_time
-            for elem in processes:
-                if elem.pid == ready_queue[0].pid:
-                    break
-            done.append(elem.pid)
+            done.append(ready_queue[0].pid) #process is now done
             time_slices.append(
                 (
-                    elem.pid,
-                    previous_end_time - ready_queue[0].burst_time,
+                    ready_queue[0].pid,
                     previous_end_time,
-                    previous_end_time - ready_queue[0].burst_time - elem.arrival_time,
+                    previous_end_time + ready_queue[0].burst_time,
+                    previous_end_time - ready_queue[0].arrival_time,
                 )
             )
+            previous_end_time += ready_queue[0].burst_time
     return time_slices
 
 
