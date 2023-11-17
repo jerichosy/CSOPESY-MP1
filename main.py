@@ -52,8 +52,8 @@ def SJF():
                 pending.append(
                     Process(process.pid, process.arrival_time, process.burst_time)
                 )
-            # if process IS done      or      process arrives not within previous process' execution time
-            else:
+            # if process is NOT done
+            elif process.pid not in done:
                 ready_queue.append(
                     Process(process.pid, process.arrival_time, process.burst_time)
                 )
