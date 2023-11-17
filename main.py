@@ -316,13 +316,25 @@ if __name__ == "__main__":
     # X = CPU scheduling algorithm
     # Y = number of processes (constraints: 3 ≤ Y ≤ 100)
     # Z = time slice value (constraints: 1 ≤ Z ≤ 100, applicable to Round-Robin only, if X is not RR then this must be set 1 and ignored)
-    X, Y, Z = list(map(int, input().rstrip().split(" ")))
+    processesList = input().rstrip()
+    if " " in processesList:
+        X, Y, Z = list(map(int,processesList.split(" ")))
+
+    elif "\t" in processesList:
+        X, Y, Z = list(map(int,processesList.split("\t")))
+
     processes = []
     for _ in range(Y):
         # A = process ID
         # B = arrival time
         # C = burst time
-        A, B, C = list(map(int, input().rstrip().split(" ")))
+        processesList = input().rstrip()
+
+        if " " in processesList:
+            A, B, C = list(map(int,processesList.split(" ")))
+
+        elif "\t" in processesList:
+            A, B, C = list(map(int,processesList.split("\t")))
         processes.append(Process(A, B, C))
 
     time_slices = solve(Algorithm(X), processes, Z)
