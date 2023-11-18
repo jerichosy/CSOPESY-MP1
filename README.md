@@ -22,10 +22,10 @@ SY, Matthew Jericho G.
     c. Choose the number of the CPU Scheduling Algorithm you want to test and enter. 
     
     *****
-    In the case that the error "python3: command not found" appears. Edit line 46 of "test_script.sh".
+    In the case that the error "python3: command not found" appears. Edit line 46 of "test_script.sh". \
     Edit "python3" -> "python" 
 
-    It should look like this:
+    It should look like this \
     46       DIFF_OUTPUT=$(diff --strip-trailing-cr <(python main.py < $input_file) $output_file)
 
     Run test_script.sh again, and it should work.
