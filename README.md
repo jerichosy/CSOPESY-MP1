@@ -17,9 +17,9 @@ SY, Matthew Jericho G.
     a. "python main.py < 'testcase.txt'"
 
 3. Optionally, you can run "test_script.sh" using "Git Bash" to test the code using the test cases provided.\
-    a. Right click the folder with "test_script.sh", then click the option "Open Git Bash here"\
+    a. Right click the folder with "test_script.sh", then click the option "Open Git Bash here". \
     b. A Git Bash command prompt should appear, type "./test_script.sh" to run test cases.\
-    c. Choose the number of the CPU Scheduling Algorithm you want to test and enter.\
+    c. Choose the number of the CPU Scheduling Algorithm you want to test and enter. 
     
     *****
     In the case that the error "python3: command not found" appears. Edit line 46 of "test_script.sh".
