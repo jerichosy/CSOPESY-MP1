@@ -13,7 +13,7 @@ SY, Matthew Jericho G.
 # How To Run The Program
 
 1. Launch command prompt (cmd) in the folder containing "main.py"
-2. Run code with test_case file using input redirection:
+2. Run code with test_case file using input redirection: \
     a. "python main.py < 'testcase.txt'"
 
 3. Optionally, you can run "test_script.sh" using "Git Bash" to test the code using the test cases provided.\
